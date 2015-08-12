@@ -50,6 +50,14 @@ describe('Mocha Chai Demonstration', function () {
 			done();
 		});
 	});
+
+	it('should send back error if no numbers are passed', function (done) {
+		this.timeout = 2000; // optional
+		test_module.eventualAdd(null, null, function (err, sum) {
+			chai.expect(err).to.be.an.instanceOf(Error);
+			done();
+		});
+	});
 });
 
 describe('Sinon Demonstration', function () {
