@@ -24,6 +24,10 @@
 		}, 1900);
 	};
 
+	test_module.passAlong = function (msg, cb) {
+		cb(msg);
+	};
+
 	test_module.noConflict = function () {
 		root.test_module = prev_module;
 		return test_module;
