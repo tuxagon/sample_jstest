@@ -1,0 +1,8 @@
+{
+  "name": "demo-project-01",
+  "version": "1.0.0",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  }
+}
