@@ -37,6 +37,7 @@
 	<div id="mocha"></div>
 	<script src="../bower_components/chai/chai.js"></script>
 	<script src="../bower_components/mocha/mocha.js"></script>
+	<script src="../bower_components/sinon-X.X.X/index.js"></script>
 	<script src="../app/functions.js"></script>
 	<script>mocha.setup('bdd')</script>
 	<script src="test.js"></script>
