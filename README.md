@@ -4,7 +4,6 @@ This set up uses
 * Mocha http://mochajs.org/
 * Chai http://chaijs.com/
 * Node https://nodejs.org/ 
-* Chai as Promised https://www.npmjs.com/package/chai-as-promised
 * Bower http://bower.io/
 * Sinon http://sinonjs.org/
 
@@ -13,7 +12,7 @@ This set up uses
 1. Install node.js https://nodejs.org/
 2. Run `npm install -g bower` to install the bower package manager
 3. Navigate to project directory (javascript folder with app/ and test/)
-4. Run `bower init` to generate bower.json file
+4. Run `bower init` to generate `bower.json` file
 
     ```json
     {
@@ -22,13 +21,12 @@ This set up uses
     }
     ```
 
-5. Run `npm init` to generate package.json file
+5. Run `npm init` to generate `package.json` file
 
     ```json
     {
       "name": "Project Name",
       "version": "1.0.0",
-      "main": "test.js",
       "scripts": {
         "test": "mocha -R spec"
       }
@@ -36,9 +34,9 @@ This set up uses
     ```
 
 6. Run `bower install mocha chai` to install mocha and chai for browser
-7. Run `npm install mocha chai` to install mocha and chai for node
+7. Run `npm install mocha chai --save-dev` to install mocha and chai for node
 8. Run `bower install http://sinonjs.org/releases/sinon-X.X.X.js` where X refers to each version number (see http://sinonjs.org/download/ for current version). This gets you the built version of sinon for the browser
-9. Run `npm install sinon` to install sinon for node
+9. Run `npm install sinon --save-dev` to install sinon for node
 10. Setup boilerplate code for testing in the browser
 
     ```html
@@ -62,4 +60,96 @@ This set up uses
         </script>
     </body>
     </html>
+    ```
+
+----
+
+## Grunt Installation/Configuration
+1. Run `npm install -g grunt-cli` to install the Grunt CLI globally
+2. Add `gruntfile.js` to the root of the project directory alongside `package.json`. This file loads the `package.json` file into the property named `pkg` so that it can be used like metadata.
+
+    ```javascript
+    module.exports = function (grunt) {
+        grunt.initConfig({
+            pkg: grunt.file.readJSON('package.json')
+        });
+    };
+    ```
+
+3. Run `npm intall grunt --save-dev` to install the Grunt runner
+    * Grunt plugin installation pattern
+        1. Install the npm module
+        2. Tell Grunt to load the plugin
+        3. Configure task by telling the plugin which files to operate on and passing some options 
+4. Run `npm istall grunt-contrib-jshint --save-dev` to install the package for JSHinting
+5. Update `gruntfile.js` with 
+
+    ```javascript
+    module.exports = function (grunt) {
+        grunt.initConfig({
+            pkg: grunt.file.readJSON('package.json'),
+            jshint: {
+                files: ['gruntfile.js', 'app/*.js'],
+                options: {
+                    maxlen: 80,
+                    quotmark: 'single'
+                }
+            }
+        });
+
+        grunt.loadNpmTasks('grunt-contrib-jshint');
+    };
+    ```
+6. Run `npm install grunt-contrib-concat --save-dev` to install the package for Concatenation
+7. Update `gruntfile.js` with
+
+    ```javascript
+    // ...
+    grunt.initConfig({
+        // ...
+        concat: {
+            options: {
+                separator: ';\n',
+                banner: banner
+            },
+            build: {
+                files: [{
+                    src: ['app/*.js'],
+                    dest: 'build/<%= pkg.name %>.js'
+                }]
+            }
+        }
+    });
+
+    // ...
+    grunt.loadNpmTasks('grunt-contrib-concat');
+
+    grunt.registerTask('default', ['jshint','concat']);
+    // ...
+    ```
+
+8. Run `npm install grunt-contrib-uglify --save-dev` to install the package for Minification
+9. Update `gruntfile.js` with
+
+    ```javascript
+    // ...
+    grunt.initConfig({
+        // ...
+        uglify: {
+            options: {
+                banner: banner
+            },
+            build: {
+                files: {
+                    'build/<%= pkg.name %>.min.js': ['build/<%= pkg.name %>.js']
+                }
+            }
+        }
+    });
+
+    // ...
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.registerTask('default', ['jshint','concat','uglify']);
+    // ...
     ```

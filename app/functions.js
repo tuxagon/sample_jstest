@@ -1,13 +1,13 @@
-"use strict";
-
 (function () {
+	"use strict";
+
 	var root = this;
 	var prev_module = root.test_module;
 
 	var test_module = function () { };
 
 	test_module.isEven = function (num) {
-		return num % 2 == 0;
+		return num % 2 === 0;
 	};
 
 	test_module.add = function (num1, num2) {
