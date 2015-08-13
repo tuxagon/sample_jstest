@@ -1,4 +1,15 @@
 # JavaScript Testing Set Up for Browser & Node.js
+
+This set up uses
+* Mocha http://mochajs.org/
+* Chai http://chaijs.com/
+* Node https://nodejs.org/ 
+* Chai as Promised https://www.npmjs.com/package/chai-as-promised
+* Bower http://bower.io/
+* Sinon http://sinonjs.org/
+
+----
+
 1. Install node.js https://nodejs.org/
 2. Run `npm install -g bower` to install the bower package manager
 3. Navigate to project directory (javascript folder with app/ and test/)
