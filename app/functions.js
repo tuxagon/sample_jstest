@@ -28,6 +28,19 @@
 		cb(msg);
 	};
 
+	test_module.getComments = function (cb) {
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function (e) {
+			console.log(e.target.response.substring(0, 100));
+			cb(e.target.response);
+		};
+		xhr.onerror = function (e) {
+			console.log('error');
+		};
+		xhr.open('GET', 'http://jsonplaceholder.typicode.com/comments', true);
+		xhr.send();
+	};
+
 	test_module.noConflict = function () {
 		root.test_module = prev_module;
 		return test_module;
