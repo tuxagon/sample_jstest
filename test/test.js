@@ -2,9 +2,9 @@ var has_require = typeof require !== 'undefined';
 
 if (has_require) {
 	require('../app/functions.js');
-	var test_module = require('../app/common.js').test_module;
 	var chai = require('chai');
 	var sinon = require('sinon');
+	var test_module = require('../app/common.js').test_module;
 }
 
 describe('JavaScript Testing Demo', function () {

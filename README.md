@@ -185,3 +185,4 @@ This set up uses
 
 ## Miscellaneous
 1. Run `npm install -g node-inspector` to install the node-inspector debugger
+2. Run `node-debug app.js` to debug a javascript file named `app.js`
