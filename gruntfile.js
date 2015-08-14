@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 		jshint: {
 			files: ['gruntfile.js', 'app/*.js'],
 			options: {
-				maxlen: 80
+				maxlen: 120
 			}
 		},
 		concat: {
@@ -33,12 +33,25 @@ module.exports = function (grunt) {
 						['build/<%= pkg.name %>.js']
 				}
 			}
-		}
+		},
+		simplemocha: {
+            options: {
+                globals: ['expect'],
+                timeout: 3000,
+                ignoreLeaks: false,
+                ui: 'bdd',
+                reporter: 'spec'
+            },
+            all: {
+                src: ['test/*.js']
+            }
+        }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-simple-mocha');
 
-	grunt.registerTask('default', ['jshint','concat','uglify']);
+	grunt.registerTask('default', ['jshint','simplemocha','concat','uglify']);
 };

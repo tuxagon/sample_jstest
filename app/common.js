@@ -2,6 +2,7 @@
     'use strict';
 
     var root = this;
+    var exports = {};
 
     var ns = (function () {
         var self_ = {};
@@ -10,18 +11,15 @@
         self_._private = private_;
 
         self_.resolveContext = function (moduleName, moduleObject, contexts) {
-            if (typeof exports !== 'undefined') {
-                if (typeof module !== 'undefined' && module.exports) {
+            if (typeof module !== 'undefined' && module.exports) {
                     private_.prepareContext(contexts, module.exports);
                     private_.resolveContext(moduleName, moduleObject, contexts, module.exports);
-                }
-                private_.prepareContext(contexts, exports);
-                private_.resolveContext(moduleName, moduleObject, contexts, exports);
+                    exports = module.exports;
             } else {
                 private_.prepareContext(contexts, root);
                 private_.resolveContext(moduleName, moduleObject, contexts, root);
             }
-        }
+        };
 
         var private_ = {
             resolveContext: function (moduleName, moduleObject, contexts, rootContext) {

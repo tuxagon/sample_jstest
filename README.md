@@ -153,3 +153,34 @@ This set up uses
     grunt.registerTask('default', ['jshint','concat','uglify']);
     // ...
     ```
+
+10. Run `npm install grunt-simple-mocha --save-dev` to install the mocha grunt plugin
+11. Update `gruntfile.js` with
+
+    ```javascript
+    // ...
+    grunt.initConfig({
+        // ...
+        simplemocha: {
+            options: {
+                globals: ['expect'],
+                timeout: 3000,
+                ignoreLeaks: false,
+                ui: 'bdd',
+                reporter: 'spec'
+            },
+            all: {
+                src: ['test/*.js']
+            }
+        }
+    });
+
+    // ...
+    grunt.loadNpmTasks('grunt-simple-mocha');
+
+    grunt.registerTask('default', ['jshint','simplemocha','concat','uglify']);
+    // ...
+    ```
+
+## Miscellaneous
+1. Run `npm install -g node-inspector` to install the node-inspector debugger

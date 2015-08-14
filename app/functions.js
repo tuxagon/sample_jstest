@@ -1,3 +1,9 @@
+var has_require = typeof require !== 'undefined';
+
+if (has_require) {
+	var ns = require('../app/common.js').ns;
+}
+
 (function () {
 	"use strict";
 
@@ -46,5 +52,5 @@
 		return test_module;
 	};
 
-	ns.resolveContext('test_module', test_module)
+	ns.resolveContext('test_module', test_module);
 }).call(this);

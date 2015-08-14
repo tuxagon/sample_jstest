@@ -1,8 +1,61 @@
 /*
 demo-project-01 1.0.0- A sample project showing the basics of getting javascript testing up and running
 https://github.com/tuxagon/sample_jstest.git
-Built on 2015-08-13
+Built on 2015-08-14
 */
+(function () {
+    'use strict';
+
+    var root = this;
+    var exports = {};
+
+    var ns = (function () {
+        var self_ = {};
+
+        // Exposed for testing, not actually part of public API
+        self_._private = private_;
+
+        self_.resolveContext = function (moduleName, moduleObject, contexts) {
+            if (typeof module !== 'undefined' && module.exports) {
+                    private_.prepareContext(contexts, module.exports);
+                    private_.resolveContext(moduleName, moduleObject, contexts, module.exports);
+                    exports = module.exports;
+            } else {
+                private_.prepareContext(contexts, root);
+                private_.resolveContext(moduleName, moduleObject, contexts, root);
+            }
+        };
+
+        var private_ = {
+            resolveContext: function (moduleName, moduleObject, contexts, rootContext) {
+                var currentContext = rootContext;
+                if (contexts && contexts.length > 0) {
+                    private_.resolveContext(moduleName, moduleObject, contexts, currentContext[contexts.splice(0, 1)]);
+                } else {
+                    currentContext[moduleName] = moduleObject;
+                }
+            },
+            prepareContext: function (contexts, rootContext) {
+                var currentContext = rootContext;
+                if (currentContext && contexts) {
+                    for (var i = 0; i < contexts.length; i++) {
+                        currentContext = currentContext[contexts[i]] = currentContext[contexts[i]] || {};
+                    }
+                }
+            }
+        };
+
+        return self_;
+    })();
+
+    ns.resolveContext('ns', ns);
+}).call(this);;
+var has_require = typeof require !== 'undefined';
+
+if (has_require) {
+	var ns = require('../app/common.js').ns;
+}
+
 (function () {
 	"use strict";
 
@@ -51,12 +104,5 @@ Built on 2015-08-13
 		return test_module;
 	};
 
-	if (typeof exports !== 'undefined') {
-		if (typeof module !== 'undefined' && module.exports) {
-			exports = module.exports = test_module;
-		}
-		exports.test_module = test_module;
-	} else {
-		root.test_module = test_module;
-	}
-}).call(this);
+	ns.resolveContext('test_module', test_module);
+}).call(this);;
