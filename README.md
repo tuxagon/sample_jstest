@@ -9,6 +9,7 @@ This set up uses
 
 ----
 
+## Testing Component Installation
 1. Install node.js https://nodejs.org/
 2. Run `npm install -g bower` to install the bower package manager
 3. Navigate to project directory (javascript folder with app/ and test/)
