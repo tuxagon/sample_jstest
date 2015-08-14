@@ -1,41 +1,44 @@
 (function () {
-    "use strict";
+    'use strict';
 
     var root = this;
 
     var ns = (function () {
         var self_ = {};
 
-        self_.resolveContext = function (moduleName, moduleObject, context) {
-            var node_exports = typeof exports !== 'undefined';
-            var node_module = typeof module !== 'undefined';
-            var current = { exports: {}, moduleExports: {}, root: {} };
+        // Exposed for testing, not actually part of public API
+        self_._private = private_;
 
-            if (node_module) { moduleExports = current.moduleExports; }
-            exports = current.exports || {};
-            current.root = root || {};
-
-            if (typeof context !== 'undefined') {
-                for (var i = context.length - 1; i >= 0; i--) {
-                    var spliced = context.splice(i, 1);
-                    if (node_exports) {
-                        if (node_module) {
-                            self_.resolveContext(context[i], module.exports, spliced);
-                        }
-                        self_.resolveContext(context[i], exports, spliced);
-                    } else {
-                        self_.resolveContext(context[i], root, spliced);
-                    }
-                }
-            }
-
+        self_.resolveContext = function (moduleName, moduleObject, contexts) {
             if (typeof exports !== 'undefined') {
                 if (typeof module !== 'undefined' && module.exports) {
-                    exports = module.exports = module;
+                    private_.prepareContext(contexts, module.exports);
+                    private_.resolveContext(moduleName, moduleObject, contexts, module.exports);
                 }
-                exports[moduleName] = module;
+                private_.prepareContext(contexts, exports);
+                private_.resolveContext(moduleName, moduleObject, contexts, exports);
             } else {
-                root[moduleName] = module;
+                private_.prepareContext(contexts, root);
+                private_.resolveContext(moduleName, moduleObject, contexts, root);
+            }
+        }
+
+        var private_ = {
+            resolveContext: function (moduleName, moduleObject, contexts, rootContext) {
+                var currentContext = rootContext;
+                if (contexts && contexts.length > 0) {
+                    private_.resolveContext(moduleName, moduleObject, contexts, currentContext[contexts.splice(0, 1)]);
+                } else {
+                    currentContext[moduleName] = moduleObject;
+                }
+            },
+            prepareContext: function (contexts, rootContext) {
+                var currentContext = rootContext;
+                if (currentContext && contexts) {
+                    for (var i = 0; i < contexts.length; i++) {
+                        currentContext = currentContext[contexts[i]] = currentContext[contexts[i]] || {};
+                    }
+                }
             }
         };
 

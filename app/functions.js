@@ -46,12 +46,5 @@
 		return test_module;
 	};
 
-	if (typeof exports !== 'undefined') {
-		if (typeof module !== 'undefined' && module.exports) {
-			exports = module.exports = test_module;
-		}
-		exports.test_module = test_module;
-	} else {
-		root.test_module = test_module;
-	}
+	ns.resolveContext('test_module', test_module)
 }).call(this);
