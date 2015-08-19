@@ -6,6 +6,17 @@ This set up uses
 * Node https://nodejs.org/ 
 * Bower http://bower.io/
 * Sinon http://sinonjs.org/
+* Grunt http://gruntjs.com/
+    * JSHint (grunt-contrib-jshint) https://www.npmjs.com/package/grunt-contrib-jshint
+    * Mocha (grunt-simple-mocha) https://github.com/yaymukund/grunt-simple-mocha
+    * Concat (grunt-contrib-concat) https://github.com/gruntjs/grunt-contrib-concat
+    * Uglify (grunt-contrib-uglify) https://github.com/gruntjs/grunt-contrib-uglify
+    * Watch (grunt-contrib-watch) https://github.com/gruntjs/grunt-contrib-watch
+* Gulp http://gulpjs.com/
+    * JSHint (gulp-jshint) https://www.npmjs.com/package/gulp-jshint
+    * Mocha (gulp-mocha) https://github.com/sindresorhus/gulp-mocha
+    * Concat (gulp-concat) https://github.com/wearefractal/gulp-concat
+    * Uglify (gulp-uglify) https://www.npmjs.com/package/gulp-uglify
 
 ----
 
