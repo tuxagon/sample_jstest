@@ -182,6 +182,83 @@ This set up uses
     grunt.registerTask('default', ['jshint','simplemocha','concat','uglify']);
     // ...
     ```
+12. Run `npm install grunt-contrib-watch --save-dev` to install the watch plugin
+13. Update `gruntfile.js` with
+
+    ```javascript
+    // ...
+    grunt.initConfig({
+        // ...
+        watch: {
+            scripts: {
+                files: ['gruntfile.js','app/*.js','test/**/*.js'],
+                tasks: ['development']
+            }
+        }
+    });
+
+    // ...
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    // ...
+    ```
+14. Run `grunt watch` to start the grunt watch task during development
+
+## Gulp Installation/Configuration
+1. Run `npm install gulp --g` to install the Gulp task runner
+2. Run `npm install gulp --save-dev` to install a local copy of Gulp for a project
+3. Run `npm install gulp-jshint --save-dev` to install the Gulp JSHint plugin
+4. Run `npm install gulp-concat --save-dev` to install the Gulp concatenation plugin
+5. Run `npm install gulp-uglify --save-dev` to install the Gulp minification plugin
+6. Run `npm install gulp-mocha --save-dev` to install the Gulp mocha plugin
+7. Add the following code to `gulpfile.js`
+    ```javascript
+    var fs = require('fs');
+    var path = require('path');
+    var gulp = require('gulp');
+    var jshint = require('gulp-jshint');
+    var concat = require('gulp-concat');
+    var uglify = require('gulp-uglify');
+    var mocha = require('gulp-mocha');
+
+    var pkg = JSON.parse(
+        fs.readFileSync(path.resolve(__dirname, './package.json'))
+    );
+
+    gulp.task('jshint:dev', function () {
+        gulp.src(['gulpfile.js','test/**/*.js']).pipe(jshint({
+            maxlen: 120
+        })).pipe(jshint.reporter('default'));
+    });
+
+    gulp.task('jshint:app', function () {
+        gulp.src(['app/*.js']).pipe(jshint({
+            maxlen: 120
+        })).pipe(jshint.reporter('default'));
+    });
+
+    gulp.task('test', function () {
+        gulp.src(['test/**/*.js']).pipe(mocha());
+    });
+
+    gulp.task('concat', function () {
+        gulp.src(['app/*.js']).pipe(concat(pkg.name + '.js')).pipe(gulp.dest('./build/'));
+    });
+
+    gulp.task('minify', function () {
+        gulp.src(['./build/' + pkg.name + '.js']).pipe(uglify()).pipe(gulp.dest('./build/min/'))
+    });
+
+    gulp.task('development', function () {
+        gulp.watch(['gulpfile.js','app/*js','test/**/*.js'], function () {
+            gulp.run('jshint:dev','jshint:app','test');
+        });
+    });
+
+    gulp.task('default', function () {
+        gulp.run('jshint:dev','jshint:app','test','concat','minify');
+    });
+    ```
+8. Run `gulp` to start the gulp process
 
 ## Miscellaneous
 1. Run `npm install -g node-inspector` to install the node-inspector debugger

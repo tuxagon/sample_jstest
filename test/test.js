@@ -1,3 +1,4 @@
+/*jshint expr: true*/
 var has_require = typeof require !== 'undefined';
 
 if (has_require) {
@@ -137,7 +138,7 @@ describe('JavaScript Testing Demo', function () {
 			});
 
 			it('should successfully stub a pre-existing function', function () {
-				var stub = sinon.stub(test_module, "passAlong", function () { return true });
+				var stub = sinon.stub(test_module, "passAlong", function () { return true; });
 				var spy = sinon.spy();
 
 				chai.expect(test_module.passAlong('Hello', stub)).to.be.true;
@@ -194,7 +195,7 @@ describe('JavaScript Testing Demo', function () {
 
 					xhr.onCreate = function (xhr) {
 						requests.push(xhr);
-					}
+					};
 				});
 
 				afterEach(function () {
@@ -206,7 +207,9 @@ describe('JavaScript Testing Demo', function () {
 						var spy = sinon.spy();
 						test_module.getComments(spy);
 						chai.expect(requests.length).to.be.equal(1);
-						requests[0].respond(200, { "Content-Type": "application/json" }, '[{ id: 12, comment: "Hey there" }]');
+						requests[0].respond(200, { 
+							"Content-Type": "application/json" 
+						}, '[{ id: 12, comment: "Hey there" }]');
 						sinon.assert.called(spy);
 						sinon.assert.calledWith(spy, '[{ id: 12, comment: "Hey there" }]');
 					} else {
@@ -228,7 +231,10 @@ describe('JavaScript Testing Demo', function () {
 
 				it('should successfully fake a server', function () {
 					if (!has_require) {
-						server.respondWith("GET", "http://jsonplaceholder.typicode.com/comments", [200, { "Content-Type": "application/json" }, '[{ "id": 12, "comment": "Hey there" }]']);
+						server.respondWith("GET", "http://jsonplaceholder.typicode.com/comments", 
+							[200, { 
+								"Content-Type": "application/json" 
+							}, '[{ "id": 12, "comment": "Hey there" }]']);
 						var spy = sinon.spy();
 						test_module.getComments(spy);
 						server.respond();

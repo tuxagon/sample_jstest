@@ -6,7 +6,8 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		jshint: {
-			files: ['gruntfile.js', 'app/*.js'],
+			dev: ['gruntfile.js', 'test/*.js'],
+			app: ['app/*.js'],
 			options: {
 				maxlen: 120
 			}
@@ -45,6 +46,12 @@ module.exports = function (grunt) {
             all: {
                 src: ['test/*.js']
             }
+        },
+        watch: {
+        	scripts: {
+        		files: ['gruntfile.js','app/*.js','test/**/*.js'],
+        		tasks: ['development']
+        	}
         }
 	});
 
@@ -52,6 +59,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('default', ['jshint','simplemocha','concat','uglify']);
+	grunt.registerTask('development', ['jshint','simplemocha']);
 };
