@@ -1,3 +1,8 @@
+/*
+demo-project-01 1.0.0- A sample project showing the basics of getting javascript testing up and running
+https://github.com/tuxagon/sample_jstest.git
+Built on 2015-08-24
+*/
 (function () {
     'use strict';
 
@@ -44,7 +49,7 @@
     })();
 
     ns.resolveContext('ns', ns);
-}).call(this);
+}).call(this);;
 var has_require = typeof require !== 'undefined';
 
 if (has_require) {
