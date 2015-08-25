@@ -45,9 +45,9 @@ This set up uses
     }
     ```
 
-6. Run `bower install mocha chai` to install mocha and chai for browser
+6. Run `bower install mocha chai --save-dev` to install mocha and chai for browser
 7. Run `npm install mocha chai --save-dev` to install mocha and chai for node
-8. Run `bower install http://sinonjs.org/releases/sinon-X.X.X.js` where X refers to each version number (see http://sinonjs.org/download/ for current version). This gets you the built version of sinon for the browser
+8. Run `bower install http://sinonjs.org/releases/sinon-X.X.X.js --save-dev` where X refers to each version number (see http://sinonjs.org/download/ for current version). This gets you the built version of sinon for the browser
 9. Run `npm install sinon --save-dev` to install sinon for node
 10. Setup boilerplate code for testing in the browser
 
