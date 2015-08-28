@@ -271,6 +271,12 @@ This set up uses
     ```
 8. Run `gulp` to start the gulp process
 
-## Miscellaneous
+## Debugging Node (Node-Inspector)
 1. Run `npm install -g node-inspector` to install the node-inspector debugger
 2. Run `node-debug app.js` to debug a javascript file named `app.js`
+
+## Browserify
+1. Run `npm install -g browserify` to install browserify
+2. Run `browserify original.js > bundle.js` to place the contents of `original.js` and all its dependencies from `require()` into a new file called `vendor.js`
+3. Run `browserify -r q -r react > bundle.js` to require the specified modules (`q`,`react`) and their dependencies be placed into a new file called `vendor.js`
+4. Run `browserify -x q -x react original.js > build/app.js` to tell browserify that the given module(s) will be provided externally. Important to note: The `vendor.js` file would need to be placed before `build/app.js` file.
